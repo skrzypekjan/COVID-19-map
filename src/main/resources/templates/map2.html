@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
+    <meta charset="UTF-8">
+    <title>Map</title>
+    <style>
+        #map { height: 900px; }
+    </style>
+</head>
+<body>
+<div id = "map"></div>
+<script th:inline="javascript">
+
+    var points = [[${points}]];
+
+    //var map = L.map('map').setView([0, 0], 1);
+    var map = L.map('map').setView([49.59, 17.25], 5);
+
+    L.tileLayer('https://api.maptiler.com/maps/darkmatter/256/{z}/{x}/{y}.png?key=5sO9hT4U68nfyOoYyfZK', {
+        attribution: '<a href="https://www.maptiler.com/copyright/" ' +
+            'target="_blank">&copy; MapTiler</a> ' +
+            '<a href="https://www.openstreetmap.org/copyright" ' +
+            'target="_blank">&copy; OpenStreetMap contributors</a>'
+    }).addTo(map);
+
+    L.marker([54.35, 18.64]).addTo(map)
+        .bindPopup("My city!")
+
+    // points.forEach(value => {
+    //     L.marker([value.lat, value.lon]).addTo(map)
+    //     .bindPopup(value.text);
+    // });
+
+    // var circle = L.circle([54.35, 18.64], {
+    //     color: 'red',
+    //     fillColor: '#f03',
+    //     fillOpacity: 0.5,
+    //     radius: 1000
+    // }).addTo(map);
+
+
+    points.forEach(value => {
+        L.circle([value.lat, value.lon], {
+            color: 'red',
+            fillColor: '#8c0415',
+            fillOpacity: 0.5,
+            radius: 50000
+    }).addTo(map).bindPopup(value.text)
+    });
+
+</script>
+
+</body>
+</html>
